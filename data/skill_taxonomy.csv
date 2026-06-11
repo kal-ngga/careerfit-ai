@@ -1,0 +1,48 @@
+skill,category
+python,programming
+java,programming
+javascript,programming
+typescript,programming
+php,programming
+sql,database
+mysql,database
+postgresql,database
+mongodb,database
+machine learning,data science
+deep learning,data science
+data analysis,data science
+data analytics,data science
+data visualization,data science
+statistics,data science
+pandas,data science
+numpy,data science
+scikit-learn,data science
+tensorflow,data science
+pytorch,data science
+matplotlib,data visualization
+seaborn,data visualization
+power bi,data visualization
+tableau,data visualization
+excel,data analytics
+streamlit,deployment
+fastapi,backend
+flask,backend
+django,backend
+laravel,backend
+react,frontend
+next.js,frontend
+tailwind css,frontend
+html,frontend
+css,frontend
+figma,design
+ui/ux,design
+wireframe,design
+prototype,design
+docker,deployment
+git,tools
+github,tools
+api,backend
+rest api,backend
+cloud,deployment
+aws,deployment
+google cloud,deployment

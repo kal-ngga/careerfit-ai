@@ -1,0 +1,9 @@
+Kalingga Rafif is an Information Systems student with experience in data science, machine learning, data analysis, and data visualization.
+
+He has worked with Python, SQL, Pandas, NumPy, Scikit-learn, Matplotlib, Streamlit, Git, and GitHub.
+
+In the Employee Burnout Prediction project, he performed data preprocessing, exploratory data analysis, feature selection, regression modeling, classification modeling, clustering, and model evaluation. He also built an interactive Streamlit dashboard to display prediction results and insights.
+
+He has experience creating data visualization charts, analyzing datasets, and building machine learning models for academic and portfolio projects.
+
+He also has basic experience in API development and web development using React and backend technologies.

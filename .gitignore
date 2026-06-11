@@ -1,0 +1,45 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment variables and local config
+.env
+.env.*
+!.env.example
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Build and packaging artifacts
+build/
+dist/
+*.egg-info/
+
+# Model and data artifacts
+models/
+artifacts/
+*.pkl
+*.joblib
+*.onnx
+
+# Private resume/job files. Keep curated sample TXT/CSV files trackable.
+data/*.pdf
+data/*.docx
+data/*private*
+data/*personal*
