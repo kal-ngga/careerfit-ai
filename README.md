@@ -1,19 +1,17 @@
 # CareerFit AI
 
-CareerFit AI is an AI-powered resume and job description matching system that analyzes how well a candidate's CV matches a specific job opportunity. The system uses Natural Language Processing (NLP), semantic similarity, and skill extraction to calculate a compatibility score between a resume and a job description.
+CareerFit AI is an AI-powered resume and job description matching engine that analyzes how well a CV matches a specific job opportunity.
 
-This project was built as a personal portfolio project to explore the combination of Data Science, Machine Learning, NLP, and Web/API development.
+This project uses Natural Language Processing, semantic similarity, and skill matching to calculate a CV-job compatibility score. The goal is to help job seekers understand their resume relevance before applying to internships or jobs.
 
-## Project Overview
+## Project Description
 
-The main goal of this project is to help job seekers understand how relevant their resume is to a specific internship or job vacancy.
+CareerFit AI compares two main inputs:
 
-Users can provide:
+- Resume / CV
+- Job description
 
-- A resume or CV
-- A job description
-
-The system will analyze both texts and generate:
+Then the system generates:
 
 - Overall match score
 - Match category
@@ -22,106 +20,80 @@ The system will analyze both texts and generate:
 - Score breakdown
 - Resume improvement recommendations
 
+This project is currently focused on building the AI/ML matching engine. The API and web interface will be developed in the next stage.
+
 ## Important Disclaimer
 
 This system does not guarantee whether a candidate will be accepted or rejected by a company.
 
-The generated score represents the compatibility between the resume and the job description based on text similarity, skill matching, and keyword analysis. Hiring decisions may depend on many other factors such as interview performance, portfolio quality, work experience, company requirements, and recruiter judgment.
+The score only represents the compatibility between a resume and a job description based on text similarity, skill matching, and keyword analysis. Real hiring decisions may depend on interviews, portfolio quality, work experience, recruiter judgment, and company requirements.
 
 ## Features
 
-- Resume text extraction from TXT, PDF, or DOCX files
-- Job description text processing
-- General skill extraction using a customizable skill taxonomy
-- Alias-based skill matching
-- Semantic similarity using Sentence Transformer
-- Baseline text similarity using TF-IDF
-- CV-job compatibility scoring
-- Matched skills and missing skills detection
-- Recommendation generation for resume improvement
-- Modular Python code structure
-- Ready to be integrated with API and web interface in future development
+- Extract text from resume files
+- Process job description text
+- Extract skills from resume and job description
+- Support general skill taxonomy with aliases
+- Calculate semantic similarity using Sentence Transformer
+- Calculate baseline similarity using TF-IDF
+- Detect matched and missing skills
+- Generate CV improvement recommendations
+- Modular Python project structure
 
 ## How It Works
 
-The system follows a simple AI/NLP pipeline:
+The system follows this pipeline:
 
-text Resume / CV     ↓ Text Extraction     ↓ Text Cleaning     ↓ Skill Extraction     ↓ Semantic Similarity Calculation     ↓ Skill Match Calculation     ↓ Final Score Calculation     ↓ Recommendation Generation 
+text Resume / CV     ↓ Text Extraction     ↓ Text Cleaning     ↓ Skill Extraction     ↓ Semantic Similarity     ↓ Skill Matching     ↓ Final Score     ↓ Recommendations 
 
-The model compares the resume and job description using two main approaches:
+The matching score is calculated using a combination of semantic similarity and skill matching.
 
-1. Semantic Similarity  
-   Measures how similar the meaning of the resume is to the job description using Sentence Transformer embeddings.
-
-2. Skill Matching  
-   Detects skills from both the resume and job description using a general skill taxonomy and alias mapping.
-
-The final score is calculated using a weighted scoring system.
-
-Example formula for the simple MVP version:
+Simple scoring formula:
 
 text Final Score = 60% Semantic Similarity + 40% Skill Match 
 
-For a more advanced version, additional components such as ATS keyword score, core skill match, soft skill match, and domain relevance can be added.
+The formula can be improved later by adding ATS keyword score, core skill matching, soft skill matching, and domain relevance.
 
 ## Model Approach
 
-This project uses a hybrid NLP-based approach.
+CareerFit AI uses a hybrid NLP approach.
 
-### 1. Skill-Based Matching
+### Semantic Similarity
 
-The system uses a skill taxonomy file to detect relevant skills from resumes and job descriptions.
+The system uses Sentence Transformer to compare the meaning of the resume and job description. This helps the model understand context, not only exact words.
+
+### Skill Matching
+
+The system uses a skill taxonomy to detect skills from both resume and job description.
 
 Example:
 
-csv skill,category,domain,priority,aliases seo,technical,marketing,core,"search engine optimization;organic search" content writing,technical,marketing,core,"copywriting;article writing;blog writing" customer service,soft skill,customer support,core,"customer support;client support;customer care" python,technical,data science,core,"python programming;py" 
+csv skill,category,domain,priority,aliases seo,technical,marketing,core,"search engine optimization;organic search" content writing,technical,marketing,core,"copywriting;article writing" python,technical,data science,core,"python programming;py" 
 
-This allows the system to understand that different terms may refer to the same skill.
+With aliases, the system can understand that:
 
-For example:
+text copywriting → content writing search engine optimization → seo dashboard → data visualization customer care → customer service 
 
-text "copywriting" → content writing "search engine optimization" → SEO "customer care" → customer service "dashboard" → data visualization 
+### TF-IDF Baseline
 
-### 2. Semantic Similarity
-
-The system uses Sentence Transformer to convert resume text and job description text into semantic embeddings. These embeddings are then compared using cosine similarity.
-
-This helps the system understand meaning, not only exact keyword matches.
-
-### 3. TF-IDF Baseline
-
-TF-IDF is used as a baseline text similarity method. It helps compare keyword-level similarity between the resume and the job description.
-
-### 4. Recommendation Engine
-
-The recommendation engine generates feedback based on:
-
-- Final match score
-- Missing skills
-- Missing core requirements
-- Detected job domain
-- Resume improvement opportunities
+TF-IDF is used as a baseline method to compare keyword similarity between the resume and job description.
 
 ## Project Structure
 
-careerfit-ai/
-│
-├── data/
-│   ├── sample_resumes/
-│   ├── sample_jobs/
-│   └── skill_taxonomy.csv
-│
-├── src/
-│   ├── text_extractor.py
-│   ├── preprocessing.py
-│   ├── skill_extractor.py
-│   ├── similarity_model.py
-│   ├── scoring.py
-│   └── recommender.py
-│
-├── main.py
-├── requirements.txt
-└── README.md
+- data/  
+  Contains sample resumes, sample job descriptions, and skill taxonomy.
+
+- src/  
+  Contains the main AI/ML logic, including text extraction, preprocessing, skill extraction, similarity model, scoring, and recommendation.
+
+- main.py  
+  Main file to run the resume-job matching engine.
+
+- requirements.txt  
+  List of Python libraries required for this project.
+
+- README.md  
+  Project documentation.
 
 ## Tech Stack
 
@@ -162,71 +134,52 @@ bash python main.py
 
 Example output:
 
-text ===== AI Resume Job Match Result ===== Overall Score: 74.25% Category: Medium Match Detected Job Domain: data science  Score Breakdown: - Semantic Similarity: 78.00% - Skill Match Score: 68.00% - TF-IDF Similarity: 61.00% - ATS Keyword Score: 70.00%  Matched Skills: - python - sql - machine learning - pandas - streamlit  Missing Skills: - statistics - power bi - data visualization  Recommendations: - CV is quite relevant, but it can be improved by adding more keywords and relevant achievements. - Add missing skills explicitly if you already have experience with them. - Add measurable project impact such as model accuracy, dataset size, dashboard output, business result, or deployment link. 
+text ===== AI Resume Job Match Result ===== Overall Score: 74.25% Category: Medium Match  Matched Skills: - python - sql - machine learning - pandas  Missing Skills: - statistics - power bi - data visualization  Recommendations: - Your CV is quite relevant, but it can still be improved. - Add missing skills explicitly if you already have experience with them. - Add measurable project impact such as model accuracy, dataset size, dashboard output, or deployment link. 
 
-## Current Development Stage
+## Development Roadmap
 
-This project is currently in Phase 1: AI/ML Model Development.
+This project is planned in three main stages:
 
-The current focus is to build the resume-job matching engine before integrating it into a web application.
+### Stage 1 — AI/ML Matching Engine
 
-### Phase 1: AI/ML Engine
+Build the core resume-job matching model using NLP, semantic similarity, skill extraction, scoring, and recommendation logic.
 
-- Text extraction
-- Text preprocessing
-- Skill extraction
-- Semantic similarity
-- Skill matching
-- Final scoring
-- Recommendation generation
+Current repository status: Stage 1 in progress.
 
-### Phase 2: API Development
+### Stage 2 — Backend API
 
-Planned backend API using FastAPI:
+Extend the matching engine into an API service using FastAPI so it can receive resume and job description inputs and return analysis results as JSON.
 
-- Upload resume
-- Submit job description
-- Return match score and recommendations as JSON
-- Store analysis history
+### Stage 3 — Web Interface
 
-### Phase 3: Web Interface
+Build a web interface where users can upload their CV, paste a job description, and view the match score, missing skills, and recommendations.
 
-Planned frontend using React or Next.js:
-
-- Resume upload page
-- Job description input form
-- Match score dashboard
-- Skill gap analysis
-- Recommendation section
+The web interface may be developed as a separate frontend project or as an extension of this repository.
 
 ## Future Improvements
 
-- Add larger and more complete skill taxonomy
-- Add support for multiple job domains
-- Improve skill extraction with Named Entity Recognition
-- Add job link scraping feature
-- Add ATS-style keyword analysis
+- Add larger general skill taxonomy
+- Improve skill extraction accuracy
+- Add ATS keyword scoring
 - Add resume section detection
-- Add PDF layout-aware parsing
+- Add job domain detection
 - Add FastAPI backend
-- Add React/Next.js frontend
-- Add database for analysis history
-- Add user authentication
-- Add downloadable analysis report
+- Add React or Next.js web interface
+- Add analysis history
+- Add downloadable report
 
 ## Learning Goals
 
-This project is designed to strengthen practical skills in:
+This project is designed to improve practical skills in:
 
 - Natural Language Processing
-- Machine Learning model development
-- Semantic similarity
+- Machine Learning
 - Text preprocessing
+- Semantic similarity
 - Feature extraction
 - Python project structure
-- API integration
 - AI product development
-- End-to-end Data Science project workflow
+- API and web integration
 
 ## Author
 
