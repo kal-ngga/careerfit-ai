@@ -1,9 +1,7 @@
-Kalingga Rafif is an Information Systems student with experience in data science, machine learning, data analysis, and data visualization.
+Alya is a Communication student with experience in digital marketing, content writing, social media marketing, and campaign planning.
 
-He has worked with Python, SQL, Pandas, NumPy, Scikit-learn, Matplotlib, Streamlit, Git, and GitHub.
+She has managed Instagram content for a student organization, created content calendars, wrote social media captions, and supported marketing campaigns for campus events.
 
-In the Employee Burnout Prediction project, he performed data preprocessing, exploratory data analysis, feature selection, regression modeling, classification modeling, clustering, and model evaluation. He also built an interactive Streamlit dashboard to display prediction results and insights.
+She has basic experience in copywriting, market research, competitor research, and analyzing social media performance. She is familiar with Instagram marketing, TikTok content, Canva, and basic spreadsheet reporting.
 
-He has experience creating data visualization charts, analyzing datasets, and building machine learning models for academic and portfolio projects.
-
-He also has basic experience in API development and web development using React and backend technologies.
+She has strong communication skills, teamwork, creativity, time management, and attention to detail.

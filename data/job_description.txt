@@ -1,5 +1,5 @@
-We are looking for a Data Science Intern who has basic knowledge of Python, SQL,
-Machine Learning, Data Analysis, Statistics, and Data Visualization.
-The candidate should be able to work with pandas, numpy, scikit-learn,
-and create dashboards using Streamlit or Power BI. Experience with
-Git, GitHub, and API development is a plus.
+We are looking for a Digital Marketing Intern who can support SEO, content writing, social media marketing, campaign management, Google Ads, Meta Ads, and market research.
+
+The candidate will help create content calendars, write copy for social media, analyze campaign performance, conduct competitor research, and support digital advertising activities.
+
+Good communication, creativity, teamwork, and time management skills are required.

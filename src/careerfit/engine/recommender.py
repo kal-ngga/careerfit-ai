@@ -80,15 +80,20 @@ def generate_missing_skill_recommendation(missing_core_skills, missing_skills):
             + ". Jika kamu memang memiliki kemampuan ini, tuliskan secara eksplisit."
         )
 
-    if missing_skills:
-        top_missing = missing_skills[:7]
+    additional_missing_skills = [
+        skill for skill in missing_skills
+        if skill not in missing_core_skills
+    ]
+
+    if additional_missing_skills:
+        top_missing = additional_missing_skills[:7]
         recommendations.append(
             "Requirement tambahan yang belum terlihat: "
             + ", ".join(top_missing)
             + "."
         )
 
-    if not missing_core_skills and not missing_skills:
+    if not missing_core_skills and not additional_missing_skills:
         recommendations.append(
             "Sebagian besar requirement utama dari job description sudah terdeteksi di CV kamu."
         )

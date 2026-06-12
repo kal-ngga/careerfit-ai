@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "careerfit-ai"
+version = "0.1.0"
+description = "AI-powered resume and job description matching engine."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.2",
+    "pdfplumber>=0.11",
+    "python-docx>=1.1",
+    "scikit-learn>=1.5",
+    "sentence-transformers>=3.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
