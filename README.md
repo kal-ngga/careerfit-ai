@@ -104,7 +104,24 @@ The recommendation engine generates feedback based on:
 
 ## Project Structure
 
-text careerfit-ai/ │ ├── data/ │   ├── sample_resumes/ │   ├── sample_jobs/ │   └── skill_taxonomy.csv │ ├── src/ │   ├── text_extractor.py │   ├── preprocessing.py │   ├── skill_extractor.py │   ├── similarity_model.py │   ├── scoring.py │   └── recommender.py │ ├── main.py ├── requirements.txt └── README.md 
+careerfit-ai/
+│
+├── data/
+│   ├── sample_resumes/
+│   ├── sample_jobs/
+│   └── skill_taxonomy.csv
+│
+├── src/
+│   ├── text_extractor.py
+│   ├── preprocessing.py
+│   ├── skill_extractor.py
+│   ├── similarity_model.py
+│   ├── scoring.py
+│   └── recommender.py
+│
+├── main.py
+├── requirements.txt
+└── README.md
 
 ## Tech Stack
 
