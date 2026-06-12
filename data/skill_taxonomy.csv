@@ -1,48 +1,95 @@
-skill,category
-python,programming
-java,programming
-javascript,programming
-typescript,programming
-php,programming
-sql,database
-mysql,database
-postgresql,database
-mongodb,database
-machine learning,data science
-deep learning,data science
-data analysis,data science
-data analytics,data science
-data visualization,data science
-statistics,data science
-pandas,data science
-numpy,data science
-scikit-learn,data science
-tensorflow,data science
-pytorch,data science
-matplotlib,data visualization
-seaborn,data visualization
-power bi,data visualization
-tableau,data visualization
-excel,data analytics
-streamlit,deployment
-fastapi,backend
-flask,backend
-django,backend
-laravel,backend
-react,frontend
-next.js,frontend
-tailwind css,frontend
-html,frontend
-css,frontend
-figma,design
-ui/ux,design
-wireframe,design
-prototype,design
-docker,deployment
-git,tools
-github,tools
-api,backend
-rest api,backend
-cloud,deployment
-aws,deployment
-google cloud,deployment
+skill,category,domain,priority,aliases
+python,technical,data science,core,"python programming;py"
+sql,technical,data science,core,"structured query language;database query"
+machine learning,technical,data science,core,"ml;predictive modeling;classification;regression"
+data analysis,technical,data science,core,"data analytics;exploratory data analysis;eda;analyze data;analysing data"
+data visualization,technical,data science,core,"dashboard;charts;graphs;visualization;visualisation"
+statistics,technical,data science,core,"statistical analysis;probability;hypothesis testing"
+pandas,tool,data science,supporting,"python pandas"
+numpy,tool,data science,supporting,"numerical python"
+scikit-learn,tool,data science,supporting,"sklearn;scikit learn"
+power bi,tool,data science,supporting,"powerbi;business intelligence;bi dashboard"
+tableau,tool,data science,supporting,"tableau dashboard"
+matplotlib,tool,data science,supporting,"python visualization"
+streamlit,tool,data science,supporting,"streamlit dashboard;web app dashboard"
+
+javascript,technical,software engineering,core,"js"
+typescript,technical,software engineering,supporting,"ts"
+java,technical,software engineering,core,"java programming"
+php,technical,software engineering,supporting,"php programming"
+react,technical,software engineering,core,"react.js;reactjs"
+next.js,technical,software engineering,supporting,"nextjs;next js"
+html,technical,software engineering,core,"html5"
+css,technical,software engineering,core,"css3"
+tailwind css,tool,software engineering,supporting,"tailwind"
+api,technical,software engineering,core,"rest api;backend api;application programming interface"
+database,technical,software engineering,core,"dbms;relational database;database management"
+mysql,tool,software engineering,supporting,"my sql"
+postgresql,tool,software engineering,supporting,"postgres"
+mongodb,tool,software engineering,supporting,"mongo db"
+git,tool,software engineering,supporting,"version control"
+github,tool,software engineering,supporting,"git repository"
+docker,tool,software engineering,optional,"containerization;container"
+fastapi,tool,software engineering,supporting,"fast api"
+flask,tool,software engineering,supporting,"python flask"
+laravel,tool,software engineering,supporting,"php laravel"
+
+figma,tool,design,core,"figma design"
+ui design,technical,design,core,"user interface design;interface design"
+ux research,technical,design,core,"user research;user experience research"
+wireframe,technical,design,core,"wireframing"
+prototype,technical,design,core,"prototyping;interactive prototype"
+design system,technical,design,supporting,"component library;ui guideline;design guideline"
+visual design,technical,design,supporting,"graphic design;layout design"
+user flow,technical,design,supporting,"ux flow;flow diagram"
+usability testing,technical,design,supporting,"user testing;ux testing"
+
+seo,technical,marketing,core,"search engine optimization;organic search"
+social media marketing,technical,marketing,core,"social media strategy;instagram marketing;tiktok marketing"
+content writing,technical,marketing,core,"copywriting;article writing;blog writing"
+google ads,tool,marketing,supporting,"google advertising;paid search;sem"
+meta ads,tool,marketing,supporting,"facebook ads;instagram ads"
+campaign management,technical,marketing,core,"marketing campaign;campaign planning"
+email marketing,technical,marketing,supporting,"newsletter;email campaign"
+market research,technical,marketing,core,"competitor research;consumer research"
+brand strategy,technical,marketing,supporting,"branding;brand planning"
+content planning,technical,marketing,supporting,"content strategy;content calendar"
+
+accounting,technical,accounting,core,"bookkeeping;accountancy"
+journal entry,technical,accounting,core,"general journal;accounting journal"
+general ledger,technical,accounting,core,"ledger"
+financial reporting,technical,accounting,core,"financial statement;finance report"
+tax,technical,accounting,supporting,"taxation;tax reporting"
+audit,technical,accounting,supporting,"auditing"
+budgeting,technical,finance,core,"budget planning;budget control"
+financial analysis,technical,finance,core,"finance analysis;ratio analysis"
+financial modeling,technical,finance,supporting,"finance modeling;forecast model"
+microsoft excel,tool,general,core,"excel;spreadsheet;ms excel"
+sap,tool,operations,supporting,"sap erp;sap system"
+
+recruitment,technical,human resources,core,"talent acquisition;hiring;candidate screening"
+employee onboarding,technical,human resources,supporting,"onboarding process"
+payroll,technical,human resources,supporting,"salary processing"
+training,technical,human resources,supporting,"employee training;learning development"
+administration,technical,administration,core,"admin support;office administration"
+document management,technical,administration,core,"filing;document control"
+scheduling,technical,administration,supporting,"calendar management;appointment scheduling"
+data entry,technical,administration,core,"input data;administrative data"
+
+sales,technical,sales,core,"selling;sales process"
+lead generation,technical,sales,core,"prospecting;generate leads"
+crm,tool,sales,supporting,"customer relationship management;salesforce;hubspot"
+negotiation,soft skill,sales,core,"negotiating"
+customer service,soft skill,customer support,core,"customer support;client support;customer care"
+complaint handling,soft skill,customer support,core,"handling complaints;customer issue resolution"
+client communication,soft skill,customer support,core,"customer communication;client handling"
+
+communication,soft skill,general,core,"public speaking;presentation;verbal communication"
+teamwork,soft skill,general,core,"collaboration;team collaboration"
+leadership,soft skill,general,supporting,"team leadership;leading team"
+problem solving,soft skill,general,core,"analytical thinking;solving problems"
+critical thinking,soft skill,general,supporting,"logical thinking"
+time management,soft skill,general,core,"task management;prioritization"
+adaptability,soft skill,general,supporting,"flexibility;fast learner"
+attention to detail,soft skill,general,core,"detail oriented;accuracy"
+project management,soft skill,general,supporting,"manage project;project planning"
