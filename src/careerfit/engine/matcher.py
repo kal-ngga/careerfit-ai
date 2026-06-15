@@ -21,9 +21,37 @@ from careerfit.engine.scoring import (
 from careerfit.engine.recommender import generate_recommendations
 
 
-def analyze_resume_job_match(resume_path, job_description_path, skill_taxonomy_path):
-    resume_text = extract_text(resume_path)
-    job_text = extract_text(job_description_path)
+def analyze_resume_job_match(
+    skill_taxonomy_path,
+    resume_path=None,
+    resume_text=None,
+    job_description_path=None,
+    job_description_text=None
+):
+    if resume_text is not None:
+        resume_text = resume_text
+    elif resume_path is not None:
+        resume_text = extract_text(resume_path)
+    else:
+        raise ValueError("Either resume_path or resume_text must be provided.")
+
+    if not resume_text or not resume_text.strip():
+        raise ValueError(
+            "Resume text is empty. The uploaded file may be image-based, scanned, or not readable. "
+            "Please use a text-based PDF, DOCX, or TXT file."
+        )
+
+    if job_description_text is not None:
+        job_text = job_description_text
+    elif job_description_path is not None:
+        job_text = extract_text(job_description_path)
+    else:
+        raise ValueError("Either job_description_path or job_description_text must be provided.")
+
+    if not job_text or not job_text.strip():
+        raise ValueError("Job description text is empty.")
+
+
 
     clean_resume = clean_text(resume_text)
     clean_job = clean_text(job_text)
@@ -37,11 +65,13 @@ def analyze_resume_job_match(resume_path, job_description_path, skill_taxonomy_p
     job_skills = extract_skills(match_job, taxonomy_df)
 
     skill_result = compare_skills(resume_skills, job_skills)
+
     matched_skills = skill_result["matched_skills"]
     missing_skills = skill_result["missing_skills"]
     overall_skill_score = skill_result["skill_match_score"]
 
     core_skill_result = compare_core_skills(resume_skills, job_skills)
+
     matched_core_skills = core_skill_result["matched_core_skills"]
     missing_core_skills = core_skill_result["missing_core_skills"]
     core_skill_score = core_skill_result["core_skill_score"]
@@ -84,7 +114,6 @@ def analyze_resume_job_match(resume_path, job_description_path, skill_taxonomy_p
         "category": category,
         "dominant_domain": dominant_domain,
         "domain_count": domain_count,
-
         "score_breakdown": {
             "semantic_similarity_score": semantic_score,
             "tfidf_similarity_score": tfidf_score,
@@ -94,15 +123,11 @@ def analyze_resume_job_match(resume_path, job_description_path, skill_taxonomy_p
             "soft_skill_score": soft_skill_score,
             "domain_relevance_score": domain_relevance_score
         },
-
         "resume_skills": resume_skills,
         "job_skills": job_skills,
-
         "matched_skills": matched_skills,
         "missing_skills": missing_skills,
-
         "matched_core_skills": matched_core_skills,
         "missing_core_skills": missing_core_skills,
-
         "recommendations": recommendations
     }

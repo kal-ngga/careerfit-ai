@@ -1,103 +1,110 @@
 # CareerFit AI
 
-CareerFit AI is an AI-powered resume and job description matching engine that analyzes how well a CV matches a specific job opportunity.
+CareerFit AI is an AI-powered resume and job description matching project. It compares a resume with a target job description, calculates a compatibility score, identifies matched and missing skills, detects the dominant job domain, and generates resume improvement recommendations.
 
-This project uses Natural Language Processing, semantic similarity, and skill matching to calculate a CV-job compatibility score. The goal is to help job seekers understand their resume relevance before applying to internships or jobs.
+The project currently includes two ways to use the matcher:
 
-## Project Description
+- A Python matching engine that can be run locally from sample files.
+- A FastAPI backend with text-based and file-upload analysis endpoints.
 
-CareerFit AI compares two main inputs:
+## Disclaimer
 
-- Resume / CV
-- Job description
-
-Then the system generates:
-
-- Overall match score
-- Match category
-- Matched skills
-- Missing skills
-- Score breakdown
-- Resume improvement recommendations
-
-This project is currently focused on building the AI/ML matching engine. The API and web interface will be developed in the next stage.
-
-## Important Disclaimer
-
-This system does not guarantee whether a candidate will be accepted or rejected by a company.
-
-The score only represents the compatibility between a resume and a job description based on text similarity, skill matching, and keyword analysis. Real hiring decisions may depend on interviews, portfolio quality, work experience, recruiter judgment, and company requirements.
+CareerFit AI does not predict whether a candidate will be accepted or rejected by a company. The score is only an estimate based on text similarity, skill matching, keyword coverage, and domain relevance. Real hiring decisions can depend on interviews, portfolio quality, work experience, recruiter judgment, company needs, and many other factors.
 
 ## Features
 
-- Extract text from resume files
-- Process job description text
-- Extract skills from resume and job description
-- Support general skill taxonomy with aliases
-- Calculate semantic similarity using Sentence Transformer
-- Calculate baseline similarity using TF-IDF
-- Detect matched and missing skills
-- Generate CV improvement recommendations
-- Modular Python project structure
+- Extract resume text from TXT, PDF, and DOCX files.
+- Analyze resume text directly through the API.
+- Process job description text.
+- Load a skill taxonomy from CSV.
+- Detect skills using skill names and aliases.
+- Compare matched, missing, core, and soft skills.
+- Detect the dominant job domain from job skills.
+- Calculate semantic similarity with Sentence Transformers.
+- Calculate TF-IDF similarity as a keyword baseline.
+- Calculate ATS-style keyword coverage.
+- Generate score breakdown and resume recommendations.
+- Serve the matcher through FastAPI.
 
 ## How It Works
 
-The system follows this pipeline:
+CareerFit AI uses a hybrid NLP pipeline:
 
-text Resume / CV     ↓ Text Extraction     ↓ Text Cleaning     ↓ Skill Extraction     ↓ Semantic Similarity     ↓ Skill Matching     ↓ Final Score     ↓ Recommendations 
+```text
+Resume / CV
+    |
+    v
+Text extraction or direct text input
+    |
+    v
+Text cleaning and matching normalization
+    |
+    v
+Skill extraction from taxonomy
+    |
+    v
+Semantic similarity + TF-IDF similarity
+    |
+    v
+Skill, core skill, soft skill, ATS keyword, and domain scoring
+    |
+    v
+Final score, match category, missing skills, and recommendations
+```
 
-The matching score is calculated using a combination of semantic similarity and skill matching.
+The current final score combines several signals:
 
-Simple scoring formula:
+```text
+Final Score =
+  35% Semantic Similarity
++ 25% Core Skill Match
++ 15% Overall Skill Match
++ 10% Domain Relevance
++ 10% ATS Keyword Score
++  5% Soft Skill Match
+```
 
-text Final Score = 60% Semantic Similarity + 40% Skill Match 
+The score is categorized as:
 
-The formula can be improved later by adding ATS keyword score, core skill matching, soft skill matching, and domain relevance.
-
-## Model Approach
-
-CareerFit AI uses a hybrid NLP approach.
-
-### Semantic Similarity
-
-The system uses Sentence Transformer to compare the meaning of the resume and job description. This helps the model understand context, not only exact words.
-
-### Skill Matching
-
-The system uses a skill taxonomy to detect skills from both resume and job description.
-
-Example:
-
-csv skill,category,domain,priority,aliases seo,technical,marketing,core,"search engine optimization;organic search" content writing,technical,marketing,core,"copywriting;article writing" python,technical,data science,core,"python programming;py" 
-
-With aliases, the system can understand that:
-
-text copywriting → content writing search engine optimization → seo dashboard → data visualization customer care → customer service 
-
-### TF-IDF Baseline
-
-TF-IDF is used as a baseline method to compare keyword similarity between the resume and job description.
+- `High Match`: score >= 75
+- `Medium Match`: score >= 50
+- `Low Match`: score < 50
 
 ## Project Structure
 
-- data/  
-  Contains sample resumes, sample job descriptions, and skill taxonomy.
-
-- src/  
-  Contains the main AI/ML logic, including text extraction, preprocessing, skill extraction, similarity model, scoring, and recommendation.
-
-- main.py  
-  Main file to run the resume-job matching engine.
-
-- requirements.txt  
-  List of Python libraries required for this project.
-
-- README.md  
-  Project documentation.
+```text
+careerfit-ai/
+├── data/
+│   ├── resume.txt
+│   ├── job_description.txt
+│   └── skill_taxonomy.csv
+├── examples/
+│   └── run_engine.py
+├── src/
+│   └── careerfit/
+│       ├── api/
+│       │   ├── app.py
+│       │   ├── routes.py
+│       │   └── schemas.py
+│       └── engine/
+│           ├── matcher.py
+│           ├── preprocessing.py
+│           ├── recommender.py
+│           ├── scoring.py
+│           ├── similarity_model.py
+│           ├── skill_extractor.py
+│           └── text_extractor.py
+├── main.py
+├── pyproject.toml
+├── requirements.txt
+└── README.md
+```
 
 ## Tech Stack
 
 - Python
+- FastAPI
+- Uvicorn
 - Pandas
 - NumPy
 - Scikit-learn
@@ -105,85 +112,190 @@ TF-IDF is used as a baseline method to compare keyword similarity between the re
 - PDFPlumber
 - python-docx
 - TF-IDF
-- Cosine Similarity
-- NLP Text Processing
+- Cosine similarity
 
 ## Installation
 
-Clone this repository:
+Clone the repository and enter the project directory:
 
-bash git clone https://github.com/kal-ngga/careerfit-ai.git cd careerfit-ai 
+```bash
+git clone https://github.com/kal-ngga/careerfit-ai.git
+cd careerfit-ai
+```
 
 Create and activate a virtual environment:
 
-bash python -m venv .venv source .venv/bin/activate 
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
 Install dependencies:
 
-bash pip install -r requirements.txt 
+```bash
+pip install -r requirements.txt
+```
 
-## Usage
+For package-style imports from the `src/` layout, install the project in editable mode:
 
-Prepare your files:
+```bash
+pip install -e .
+```
 
-text data/sample_resumes/resume.txt data/sample_jobs/job_description.txt data/skill_taxonomy.csv 
+## Run the Matching Engine
 
-Run the program:
+The default local runner reads these sample files:
 
-bash python main.py 
+- `data/resume.txt`
+- `data/job_description.txt`
+- `data/skill_taxonomy.csv`
 
-Example output:
+Run:
 
-text ===== AI Resume Job Match Result ===== Overall Score: 74.25% Category: Medium Match  Matched Skills: - python - sql - machine learning - pandas  Missing Skills: - statistics - power bi - data visualization  Recommendations: - Your CV is quite relevant, but it can still be improved. - Add missing skills explicitly if you already have experience with them. - Add measurable project impact such as model accuracy, dataset size, dashboard output, or deployment link. 
+```bash
+python main.py
+```
+
+You can also run the example script:
+
+```bash
+python examples/run_engine.py
+```
+
+Example result fields:
+
+```text
+overall_score
+category
+dominant_domain
+score_breakdown
+resume_skills
+job_skills
+matched_skills
+missing_skills
+matched_core_skills
+missing_core_skills
+recommendations
+```
+
+## Run the API
+
+Start the FastAPI server:
+
+```bash
+uvicorn careerfit.api.app:app --reload
+```
+
+If the package is not installed in editable mode, run with `PYTHONPATH`:
+
+```bash
+PYTHONPATH=src uvicorn careerfit.api.app:app --reload
+```
+
+Open the interactive API docs:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+Available endpoints:
+
+```text
+GET  /
+GET  /health
+POST /analyze-text
+POST /analyze
+```
+
+### Analyze Text
+
+Use `POST /analyze-text` when both resume and job description are already plain text.
+
+Example request:
+
+```bash
+curl -X POST "http://127.0.0.1:8000/analyze-text" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "resume_text": "Python developer with SQL, data analysis, and dashboard experience.",
+    "job_description": "We need a data analyst intern with Python, SQL, statistics, and dashboard skills."
+  }'
+```
+
+### Analyze Uploaded Resume
+
+Use `POST /analyze` when uploading a resume file. Supported resume formats are `.pdf`, `.docx`, and `.txt`.
+
+Example request:
+
+```bash
+curl -X POST "http://127.0.0.1:8000/analyze" \
+  -F "resume_file=@data/resume.txt" \
+  -F "job_description=$(cat data/job_description.txt)"
+```
+
+## Skill Taxonomy
+
+The matcher depends on `data/skill_taxonomy.csv`. The CSV must contain these columns:
+
+```text
+skill,category,domain,priority,aliases
+```
+
+Example:
+
+```csv
+skill,category,domain,priority,aliases
+python,technical,data science,core,python programming;py
+seo,technical,marketing,core,search engine optimization;organic search
+communication,soft skill,general,supporting,presentation;public speaking
+```
+
+Aliases help the matcher connect different terms to the same skill. For example, `search engine optimization` can be matched as `seo`.
+
+## API Response
+
+The API returns a JSON object similar to the engine output:
+
+```json
+{
+  "overall_score": 74.25,
+  "category": "Medium Match",
+  "dominant_domain": "data science",
+  "domain_count": {
+    "data science": 6
+  },
+  "score_breakdown": {
+    "semantic_similarity_score": 80.0,
+    "tfidf_similarity_score": 55.0,
+    "overall_skill_score": 70.0,
+    "core_skill_score": 75.0,
+    "ats_keyword_score": 60.0,
+    "soft_skill_score": 50.0,
+    "domain_relevance_score": 80.0
+  },
+  "matched_skills": ["python", "sql"],
+  "missing_skills": ["statistics"],
+  "matched_core_skills": ["python"],
+  "missing_core_skills": ["statistics"],
+  "recommendations": []
+}
+```
+
+Actual values depend on the resume, job description, taxonomy, and model output.
 
 ## Development Roadmap
 
-This project is planned in three main stages:
-
-### Stage 1 — AI/ML Matching Engine
-
-Build the core resume-job matching model using NLP, semantic similarity, skill extraction, scoring, and recommendation logic.
-
-Current repository status: Stage 1 in progress.
-
-### Stage 2 — Backend API
-
-Extend the matching engine into an API service using FastAPI so it can receive resume and job description inputs and return analysis results as JSON.
-
-### Stage 3 — Web Interface
-
-Build a web interface where users can upload their CV, paste a job description, and view the match score, missing skills, and recommendations.
-
-The web interface may be developed as a separate frontend project or as an extension of this repository.
-
-## Future Improvements
-
-- Add larger general skill taxonomy
-- Improve skill extraction accuracy
-- Add ATS keyword scoring
-- Add resume section detection
-- Add job domain detection
-- Add FastAPI backend
-- Add React or Next.js web interface
-- Add analysis history
-- Add downloadable report
-
-## Learning Goals
-
-This project is designed to improve practical skills in:
-
-- Natural Language Processing
-- Machine Learning
-- Text preprocessing
-- Semantic similarity
-- Feature extraction
-- Python project structure
-- AI product development
-- API and web integration
+- Improve skill taxonomy coverage across job domains.
+- Improve extraction accuracy for multi-word skills and aliases.
+- Add stronger ATS keyword scoring.
+- Add resume section detection.
+- Add tests for engine and API behavior.
+- Add a frontend interface for uploading resumes and viewing analysis results.
+- Add downloadable reports.
 
 ## Author
 
-Kalingga Rafif  
-Aspiring Data Scientist and Information Systems student.
+Kalingga Rafif
 
-GitHub: @kal-ngga
+GitHub: [@kal-ngga](https://github.com/kal-ngga)
