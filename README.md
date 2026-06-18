@@ -1,106 +1,45 @@
 # CareerFit AI
 
-CareerFit AI is an AI-powered resume and job description matching project. It compares a resume with a target job description, calculates a compatibility score, identifies matched and missing skills, detects the dominant job domain, and generates resume improvement recommendations.
+CareerFit AI is the backend and AI engine for the CareerFit project. This repository handles resume text extraction, resume-job matching analysis, skill extraction, scoring logic, and API processing.
 
-The project currently includes two ways to use the matcher:
-
-- A Python matching engine that can be run locally from sample files.
-- A FastAPI backend with text-based and file-upload analysis endpoints.
-
-## Disclaimer
-
-CareerFit AI does not predict whether a candidate will be accepted or rejected by a company. The score is only an estimate based on text similarity, skill matching, keyword coverage, and domain relevance. Real hiring decisions can depend on interviews, portfolio quality, work experience, recruiter judgment, company needs, and many other factors.
-
-## Features
-
-- Extract resume text from TXT, PDF, and DOCX files.
-- Analyze resume text directly through the API.
-- Process job description text.
-- Load a skill taxonomy from CSV.
-- Detect skills using skill names and aliases.
-- Compare matched, missing, core, and soft skills.
-- Detect the dominant job domain from job skills.
-- Calculate semantic similarity with Sentence Transformers.
-- Calculate TF-IDF similarity as a keyword baseline.
-- Calculate ATS-style keyword coverage.
-- Generate score breakdown and resume recommendations.
-- Serve the matcher through FastAPI.
-
-## How It Works
-
-CareerFit AI uses a hybrid NLP pipeline:
+This project is connected with the frontend repository:
 
 ```text
-Resume / CV
-    |
-    v
-Text extraction or direct text input
-    |
-    v
-Text cleaning and matching normalization
-    |
-    v
-Skill extraction from taxonomy
-    |
-    v
-Semantic similarity + TF-IDF similarity
-    |
-    v
-Skill, core skill, soft skill, ATS keyword, and domain scoring
-    |
-    v
-Final score, match category, missing skills, and recommendations
+https://github.com/kal-ngga/careerfit-web
 ```
 
-The current final score combines several signals:
+The frontend provides the user interface, while this repository provides the AI engine and FastAPI backend.
+
+## Overview
+
+CareerFit AI helps analyze how well a resume matches a job description. It processes resume files, extracts text and skills, compares them with job requirements, and returns a structured compatibility analysis.
+
+The system can generate:
+
+- Overall resume-job match score
+- Match category
+- Detected job domain
+- Score breakdown
+- Matched skills
+- Missing skills
+- Missing core skills
+- Improvement recommendations
+
+## Related Repository
+
+Frontend repository:
 
 ```text
-Final Score =
-  35% Semantic Similarity
-+ 25% Core Skill Match
-+ 15% Overall Skill Match
-+ 10% Domain Relevance
-+ 10% ATS Keyword Score
-+  5% Soft Skill Match
+https://github.com/kal-ngga/careerfit-web
 ```
 
-The score is categorized as:
+Use `careerfit-web` if you want to run the web interface.
 
-- `High Match`: score >= 75
-- `Medium Match`: score >= 50
-- `Low Match`: score < 50
-
-## Project Structure
-
-```text
-careerfit-ai/
-├── data/
-│   ├── resume.txt
-│   ├── job_description.txt
-│   └── skill_taxonomy.csv
-├── examples/
-│   └── run_engine.py
-├── src/
-│   └── careerfit/
-│       ├── api/
-│       │   ├── app.py
-│       │   ├── routes.py
-│       │   └── schemas.py
-│       └── engine/
-│           ├── matcher.py
-│           ├── preprocessing.py
-│           ├── recommender.py
-│           ├── scoring.py
-│           ├── similarity_model.py
-│           ├── skill_extractor.py
-│           └── text_extractor.py
-├── main.py
-├── pyproject.toml
-├── requirements.txt
-└── README.md
-```
+Use this repository, `careerfit-ai`, if you want to run the AI engine and backend API.
 
 ## Tech Stack
+
+This backend is built with:
 
 - Python
 - FastAPI
@@ -110,192 +49,366 @@ careerfit-ai/
 - Scikit-learn
 - Sentence Transformers
 - PDFPlumber
-- python-docx
-- TF-IDF
-- Cosine similarity
+- PyMuPDF
+- Pytesseract
+- Python DOCX
 
-## Installation
+## Main Features
 
-Clone the repository and enter the project directory:
+- Resume text extraction
+- PDF, DOCX, and TXT file support
+- OCR fallback for image-based PDF resumes
+- Job description processing
+- Skill extraction using taxonomy
+- Skill alias matching
+- Resume-job semantic similarity
+- TF-IDF similarity
+- ATS keyword score
+- Domain detection
+- Final match score calculation
+- Recommendation generation
+- FastAPI endpoint for frontend integration
+
+## Project Structure
+
+```text
+careerfit-ai/
+├── data/
+│   ├── resume.txt
+│   ├── job_description.txt
+│   └── skill_taxonomy.csv
+│
+├── examples/
+│   └── run_engine.py
+│
+├── src/
+│   └── careerfit/
+│       ├── engine/
+│       │   ├── text_extractor.py
+│       │   ├── preprocessing.py
+│       │   ├── skill_extractor.py
+│       │   ├── similarity_model.py
+│       │   ├── scoring.py
+│       │   ├── recommender.py
+│       │   └── matcher.py
+│       │
+│       └── api/
+│           ├── app.py
+│           ├── routes.py
+│           └── schemas.py
+│
+├── main.py
+├── requirements.txt
+├── pyproject.toml
+└── README.md
+```
+
+## How It Works
+
+```text
+Resume File / Resume Text
+        ↓
+Text Extraction
+        ↓
+Text Cleaning
+        ↓
+Skill Extraction
+        ↓
+Semantic Similarity
+        ↓
+Skill Matching
+        ↓
+Score Calculation
+        ↓
+Recommendation Generation
+        ↓
+API Response
+```
+
+## Matching Logic
+
+CareerFit AI combines several scoring components:
+
+- Semantic similarity score
+- TF-IDF similarity score
+- Overall skill match score
+- Core skill match score
+- ATS keyword score
+- Soft skill match score
+- Domain relevance score
+
+The final score is calculated using a weighted scoring approach. The result is categorized into match levels such as Low Match, Medium Match, or High Match.
+
+## Getting Started
+
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/kal-ngga/careerfit-ai.git
 cd careerfit-ai
 ```
 
-Create and activate a virtual environment:
+### 2. Create Virtual Environment
+
+For macOS, use `python3`:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-Install dependencies:
+### 3. Install Dependencies
 
 ```bash
-pip install -r requirements.txt
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+python -m pip install -e .
 ```
 
-For package-style imports from the `src/` layout, install the project in editable mode:
+### 4. Install Tesseract for OCR
+
+This project supports OCR fallback for image-based PDF resumes. On macOS, install Tesseract using Homebrew:
 
 ```bash
-pip install -e .
+brew install tesseract
 ```
 
-## Run the Matching Engine
-
-The default local runner reads these sample files:
-
-- `data/resume.txt`
-- `data/job_description.txt`
-- `data/skill_taxonomy.csv`
-
-Run:
+Check installation:
 
 ```bash
-python main.py
+tesseract --version
 ```
 
-You can also run the example script:
+## Running the AI Engine Only
+
+To test the matching engine without running the API:
+
+```bash
+PYTHONPATH=src python examples/run_engine.py
+```
+
+This will analyze the sample files from the `data/` folder:
+
+```text
+data/resume.txt
+data/job_description.txt
+data/skill_taxonomy.csv
+```
+
+If the package has been installed correctly with `pip install -e .`, you can also run:
 
 ```bash
 python examples/run_engine.py
 ```
 
-Example result fields:
+## Running the API Server
+
+Run the FastAPI backend:
+
+```bash
+PYTHONPATH=src python -m uvicorn careerfit.api.app:app --reload
+```
+
+The API will run on:
 
 ```text
-overall_score
-category
-dominant_domain
-score_breakdown
-resume_skills
-job_skills
-matched_skills
-missing_skills
-matched_core_skills
-missing_core_skills
-recommendations
+http://127.0.0.1:8000
 ```
 
-## Run the API
-
-Start the FastAPI server:
-
-```bash
-uvicorn careerfit.api.app:app --reload
-```
-
-If the package is not installed in editable mode, run with `PYTHONPATH`:
-
-```bash
-PYTHONPATH=src uvicorn careerfit.api.app:app --reload
-```
-
-Open the interactive API docs:
+API documentation:
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-Available endpoints:
+## API Endpoints
+
+### Health Check
 
 ```text
-GET  /
-GET  /health
-POST /analyze-text
+GET /health
+```
+
+Used to check whether the backend is running.
+
+### Analyze Resume File
+
+```text
 POST /analyze
 ```
 
-### Analyze Text
-
-Use `POST /analyze-text` when both resume and job description are already plain text.
-
-Example request:
-
-```bash
-curl -X POST "http://127.0.0.1:8000/analyze-text" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "resume_text": "Python developer with SQL, data analysis, and dashboard experience.",
-    "job_description": "We need a data analyst intern with Python, SQL, statistics, and dashboard skills."
-  }'
-```
-
-### Analyze Uploaded Resume
-
-Use `POST /analyze` when uploading a resume file. Supported resume formats are `.pdf`, `.docx`, and `.txt`.
-
-Example request:
-
-```bash
-curl -X POST "http://127.0.0.1:8000/analyze" \
-  -F "resume_file=@data/resume.txt" \
-  -F "job_description=$(cat data/job_description.txt)"
-```
-
-## Skill Taxonomy
-
-The matcher depends on `data/skill_taxonomy.csv`. The CSV must contain these columns:
+Request type:
 
 ```text
-skill,category,domain,priority,aliases
+multipart/form-data
+```
+
+Form fields:
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| resume_file | File | Yes | Resume file uploaded by user |
+| job_description | Text | Yes | Job description text |
+
+Supported file formats:
+
+- PDF
+- DOCX
+- TXT
+
+### Analyze Text Only
+
+```text
+POST /analyze-text
+```
+
+Request body:
+
+```json
+{
+  "resume_text": "string",
+  "job_description": "string"
+}
+```
+
+This endpoint is useful for testing without file upload.
+
+## Example API Response
+
+```json
+{
+  "overall_score": 64.77,
+  "category": "Medium Match",
+  "dominant_domain": "marketing",
+  "domain_count": {
+    "marketing": 12,
+    "general": 6
+  },
+  "score_breakdown": {
+    "semantic_similarity_score": 50.33,
+    "tfidf_similarity_score": 31.21,
+    "overall_skill_score": 70.0,
+    "core_skill_score": 87.5,
+    "ats_keyword_score": 53.33,
+    "soft_skill_score": 100.0,
+    "domain_relevance_score": 44.44
+  },
+  "matched_skills": [
+    "campaign management",
+    "communication",
+    "content writing",
+    "market research",
+    "social media marketing"
+  ],
+  "missing_skills": [
+    "google ads",
+    "meta ads",
+    "seo"
+  ],
+  "missing_core_skills": [
+    "seo"
+  ],
+  "recommendations": [
+    "CV kamu cukup relevan, tetapi masih bisa ditingkatkan.",
+    "Core requirement yang belum terlihat di CV kamu: seo.",
+    "Requirement tambahan yang belum terlihat: google ads, meta ads."
+  ]
+}
+```
+
+## Running with the Frontend
+
+This backend is designed to be used with the CareerFit Web frontend.
+
+### 1. Run Backend
+
+```bash
+cd careerfit-ai
+source .venv/bin/activate
+PYTHONPATH=src python -m uvicorn careerfit.api.app:app --reload
+```
+
+Backend URL:
+
+```text
+http://127.0.0.1:8000
+```
+
+### 2. Clone and Run Frontend
+
+Open a new terminal:
+
+```bash
+git clone https://github.com/kal-ngga/careerfit-web.git
+cd careerfit-web
+npm install
+cp .env.example .env
+npm run dev
+```
+
+Frontend URL:
+
+```text
+http://localhost:5173
+```
+
+Make sure the frontend `.env` file contains:
+
+```env
+VITE_API_BASE_URL=http://127.0.0.1:8000
+```
+
+## Environment Notes
+
+If Python cannot find the `careerfit` package, run commands with:
+
+```bash
+PYTHONPATH=src
 ```
 
 Example:
 
-```csv
-skill,category,domain,priority,aliases
-python,technical,data science,core,python programming;py
-seo,technical,marketing,core,search engine optimization;organic search
-communication,soft skill,general,supporting,presentation;public speaking
+```bash
+PYTHONPATH=src python -m uvicorn careerfit.api.app:app --reload
 ```
 
-Aliases help the matcher connect different terms to the same skill. For example, `search engine optimization` can be matched as `seo`.
+If you want to avoid using `PYTHONPATH=src`, install the project as an editable package:
 
-## API Response
-
-The API returns a JSON object similar to the engine output:
-
-```json
-{
-  "overall_score": 74.25,
-  "category": "Medium Match",
-  "dominant_domain": "data science",
-  "domain_count": {
-    "data science": 6
-  },
-  "score_breakdown": {
-    "semantic_similarity_score": 80.0,
-    "tfidf_similarity_score": 55.0,
-    "overall_skill_score": 70.0,
-    "core_skill_score": 75.0,
-    "ats_keyword_score": 60.0,
-    "soft_skill_score": 50.0,
-    "domain_relevance_score": 80.0
-  },
-  "matched_skills": ["python", "sql"],
-  "missing_skills": ["statistics"],
-  "matched_core_skills": ["python"],
-  "missing_core_skills": ["statistics"],
-  "recommendations": []
-}
+```bash
+python -m pip install -e .
 ```
 
-Actual values depend on the resume, job description, taxonomy, and model output.
+## Development Notes
 
-## Development Roadmap
+This repository focuses on:
 
-- Improve skill taxonomy coverage across job domains.
-- Improve extraction accuracy for multi-word skills and aliases.
-- Add stronger ATS keyword scoring.
-- Add resume section detection.
-- Add tests for engine and API behavior.
-- Add a frontend interface for uploading resumes and viewing analysis results.
-- Add downloadable reports.
+- AI engine development
+- Resume parsing
+- Skill matching
+- Scoring logic
+- Recommendation logic
+- FastAPI backend
 
-## Author
+The frontend UI is handled in:
 
-Kalingga Rafif
+```text
+https://github.com/kal-ngga/careerfit-web
+```
 
-GitHub: [@kal-ngga](https://github.com/kal-ngga)
+## Roadmap
+
+Planned improvements:
+
+- Improve skill taxonomy coverage
+- Add better OCR preprocessing
+- Add resume section detection
+- Improve ATS keyword scoring
+- Add downloadable report generation
+- Add job URL extraction
+- Add resume improvement suggestions
+- Add model evaluation scripts
+- Prepare backend deployment
+
+## Disclaimer
+
+CareerFit AI provides a resume-job compatibility analysis based on text extraction, skill matching, and NLP similarity. The result is intended to help users improve their resume and is not a guarantee of job acceptance or rejection.
