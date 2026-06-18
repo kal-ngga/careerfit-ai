@@ -1,6 +1,5 @@
 from careerfit.engine.matcher import analyze_resume_job_match
 
-
 def print_result(result):
     print("\n===== AI Resume Job Match Result =====")
     print(f"Overall Score: {result['overall_score']}%")
@@ -35,7 +34,7 @@ def print_result(result):
 
 if __name__ == "__main__":
     match_result = analyze_resume_job_match(
-        resume_path="data/resume.txt",
+        resume_path="data/CV_Kalingga.pdf",
         job_description_path="data/job_description.txt",
         skill_taxonomy_path="data/skill_taxonomy.csv"
     )

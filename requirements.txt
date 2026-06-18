@@ -7,3 +7,6 @@ sentence-transformers>=3.0
 fastapi
 uvicorn
 python-multipart
+pytesseract
+pillow
+pymupdf
